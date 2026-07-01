@@ -2,8 +2,8 @@
 
 A self-hosted, AI-augmented log analysis console — a lightweight alternative
 to a full SIEM for a portfolio-scale SOC pipeline. It ingests raw security
-logs, runs rule-based detection to raise candidate alerts, then uses Claude
-(Anthropic API) to triage each alert with analyst-style reasoning, a
+logs, runs rule-based detection to raise candidate alerts, then uses the
+Google Gemini API to triage each alert with analyst-style reasoning, a
 confidence score, and extracted IOCs — while keeping a **human-in-the-loop
 gate** for every high/critical or low-confidence finding.
 
@@ -26,9 +26,9 @@ for approval or override.
 └─────────────┘     └──────────────────┘               │
                                                           v
                                               ┌────────────────────────┐
-                                              │  AI Triage Engine       │
-                                              │  (Claude via Anthropic  │
-                                              │   API) — triage.py      │
+                                              │   AI Triage Engine      │
+                                              │   (Gemini API)          │
+                                              │   — triage.py           │
                                               └───────────┬────────────┘
                                                            v
                                       ┌───────────────────────────────────┐
@@ -42,7 +42,7 @@ for approval or override.
 
 - **Backend:** FastAPI (`backend/`)
 - **Storage:** SQLite, with an FTS5 virtual table for full-text log search
-- **AI triage:** Anthropic API (`triage.py`), structured JSON output (verdict,
+- **AI triage:** Google Gemini API (`triage.py`, free tier), structured JSON output (verdict,
   confidence, reasoning, recommended action, IOCs)
 - **Frontend:** single-page dark-themed dashboard, vanilla JS (no build step)
 
@@ -67,7 +67,7 @@ python -m venv .venv && source .venv/bin/activate   # optional but recommended
 pip install -r requirements.txt
 
 cp .env.example .env
-# edit .env and set ANTHROPIC_API_KEY
+# edit .env and set GEMINI_API_KEY (free key at https://aistudio.google.com/apikey)
 
 uvicorn backend.main:app --reload
 ```
