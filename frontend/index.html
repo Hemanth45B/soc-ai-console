@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SOC AI Console</title>
+<link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark">&gt;_</span>
+        <span class="brand-name">SOC AI CONSOLE</span>
+      </div>
+      <div class="stats" id="stats">
+        <span class="stat"><b id="statLogs">0</b> logs</span>
+        <span class="stat"><b id="statAlerts">0</b> alerts</span>
+        <span class="stat pending"><b id="statPending">0</b> pending review</span>
+      </div>
+    </header>
+
+    <main class="grid">
+      <section class="panel panel-search">
+        <div class="panel-head">
+          <h2>Log Search</h2>
+          <span class="panel-sub">FTS5 full-text index</span>
+        </div>
+        <form id="searchForm" class="search-row">
+          <input id="searchInput" type="text" placeholder="search raw logs... e.g. failed password" autocomplete="off" />
+          <button type="submit">Search</button>
+        </form>
+        <div class="log-list" id="logList"></div>
+
+        <div class="ingest-row">
+          <button id="loadSampleBtn" class="ghost-btn">Ingest sample dataset</button>
+          <span id="ingestStatus" class="ingest-status"></span>
+        </div>
+      </section>
+
+      <section class="panel panel-alerts">
+        <div class="panel-head">
+          <h2>Alert Queue</h2>
+          <div class="filters">
+            <select id="filterStatus">
+              <option value="">all statuses</option>
+              <option value="new">new</option>
+              <option value="triaged_auto">triaged (auto)</option>
+              <option value="pending_human_review">pending human review</option>
+              <option value="escalated">escalated</option>
+              <option value="resolved">resolved</option>
+              <option value="false_positive">false positive</option>
+            </select>
+          </div>
+        </div>
+        <div class="alert-list" id="alertList"></div>
+      </section>
+
+      <section class="panel panel-detail" id="detailPanel">
+        <div class="empty-state">Select an alert to view AI triage detail.</div>
+      </section>
+    </main>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

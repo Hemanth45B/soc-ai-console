@@ -1,0 +1,19 @@
+{"timestamp": "2026-06-30T02:11:04Z", "source_ip": "203.0.113.44", "host": "edge-gw-01", "log_type": "auth", "raw_log": "sshd[8842]: Failed password for root from 203.0.113.44 port 51422 ssh2"}
+{"timestamp": "2026-06-30T02:11:07Z", "source_ip": "203.0.113.44", "host": "edge-gw-01", "log_type": "auth", "raw_log": "sshd[8843]: Failed password for root from 203.0.113.44 port 51430 ssh2"}
+{"timestamp": "2026-06-30T02:11:09Z", "source_ip": "203.0.113.44", "host": "edge-gw-01", "log_type": "auth", "raw_log": "sshd[8844]: Failed password for admin from 203.0.113.44 port 51441 ssh2"}
+{"timestamp": "2026-06-30T02:11:12Z", "source_ip": "203.0.113.44", "host": "edge-gw-01", "log_type": "auth", "raw_log": "sshd[8845]: Failed password for admin from 203.0.113.44 port 51458 ssh2"}
+{"timestamp": "2026-06-30T02:11:15Z", "source_ip": "203.0.113.44", "host": "edge-gw-01", "log_type": "auth", "raw_log": "sshd[8846]: Failed password for oracle from 203.0.113.44 port 51470 ssh2"}
+{"timestamp": "2026-06-30T02:11:20Z", "source_ip": "203.0.113.44", "host": "edge-gw-01", "log_type": "auth", "raw_log": "sshd[8847]: Accepted password for oracle from 203.0.113.44 port 51488 ssh2"}
+
+{"timestamp": "2026-06-30T03:40:01Z", "source_ip": "198.51.100.17", "host": "db-prod-03", "log_type": "endpoint", "raw_log": "EDR alert: process svchost32.exe flagged as cobalt strike beacon signature on db-prod-03"}
+
+{"timestamp": "2026-06-30T04:02:00Z", "source_ip": "192.0.2.88", "host": "fw-core-01", "log_type": "firewall", "raw_log": "DENY connection attempt from 192.0.2.88 to 10.0.4.10:22"}
+{"timestamp": "2026-06-30T04:02:01Z", "source_ip": "192.0.2.88", "host": "fw-core-01", "log_type": "firewall", "raw_log": "DENY connection attempt from 192.0.2.88 to 10.0.4.10:23"}
+{"timestamp": "2026-06-30T04:02:01Z", "source_ip": "192.0.2.88", "host": "fw-core-01", "log_type": "firewall", "raw_log": "DENY connection attempt from 192.0.2.88 to 10.0.4.10:80"}
+{"timestamp": "2026-06-30T04:02:02Z", "source_ip": "192.0.2.88", "host": "fw-core-01", "log_type": "firewall", "raw_log": "DENY connection attempt from 192.0.2.88 to 10.0.4.10:443"}
+{"timestamp": "2026-06-30T04:02:02Z", "source_ip": "192.0.2.88", "host": "fw-core-01", "log_type": "firewall", "raw_log": "DENY connection attempt from 192.0.2.88 to 10.0.4.10:3389"}
+{"timestamp": "2026-06-30T04:02:03Z", "source_ip": "192.0.2.88", "host": "fw-core-01", "log_type": "firewall", "raw_log": "DENY connection attempt from 192.0.2.88 to 10.0.4.10:8080"}
+
+{"timestamp": "2026-06-30T05:15:44Z", "source_ip": "10.0.2.15", "host": "vpn-gw-02", "log_type": "auth", "raw_log": "vpn: user jsmith authenticated successfully from 10.0.2.15, known device"}
+{"timestamp": "2026-06-30T05:16:02Z", "source_ip": "10.0.2.15", "host": "file-srv-01", "log_type": "fileaccess", "raw_log": "SMB: jsmith read \\\\file-srv-01\\shared\\Q3-forecast.xlsx"}
+{"timestamp": "2026-06-30T06:00:00Z", "source_ip": "10.0.5.20", "host": "mail-relay-01", "log_type": "email", "raw_log": "postfix/smtpd: delivered message from finance@partner-co.example to accounts@corp.example, size=48211"}
