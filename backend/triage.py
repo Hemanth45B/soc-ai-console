@@ -1,7 +1,7 @@
 """
 AI triage engine.
 
-Sends an alert plus its related raw log lines to Claude and asks for a
+Sends an alert plus its related raw log lines to Gemini and asks for a
 structured SOC-analyst-style verdict. High/critical severity alerts, and any
 alert the model is not confident about, are always routed to a human
 (`requires_human_approval=True`, status='pending_human_review'). This gate is
@@ -11,9 +11,10 @@ import json
 import os
 import re
 
-from anthropic import Anthropic
+from google import genai
+from google.genai import types
 
-TRIAGE_MODEL = os.environ.get("TRIAGE_MODEL", "claude-sonnet-4-6")
+TRIAGE_MODEL = os.environ.get("TRIAGE_MODEL", "gemini-2.5-flash")
 AUTO_CLOSE_CONFIDENCE_THRESHOLD = int(os.environ.get("AUTO_CLOSE_CONFIDENCE_THRESHOLD", "85"))
 
 SYSTEM_PROMPT = """You are a Tier-1 SOC analyst assistant. You will be given an
@@ -34,13 +35,14 @@ lower confidence rather than guessing.
 """
 
 
-def _client() -> Anthropic:
-    api_key = os.environ.get("ANTHROPIC_API_KEY")
+def _client() -> genai.Client:
+    api_key = os.environ.get("GEMINI_API_KEY")
     if not api_key:
         raise RuntimeError(
-            "ANTHROPIC_API_KEY is not set. Copy .env.example to .env and add your key."
+            "GEMINI_API_KEY is not set. Copy .env.example to .env and add your key "
+            "(free key at https://aistudio.google.com/apikey)."
         )
-    return Anthropic(api_key=api_key)
+    return genai.Client(api_key=api_key)
 
 
 def _build_user_prompt(alert: dict, logs: list) -> str:
@@ -66,15 +68,18 @@ def _extract_json(text: str) -> dict:
 
 
 def triage_alert(alert: dict, logs: list) -> dict:
-    """Calls Claude to triage a single alert. Returns a dict ready to persist."""
+    """Calls Gemini to triage a single alert. Returns a dict ready to persist."""
     client = _client()
-    response = client.messages.create(
+    response = client.models.generate_content(
         model=TRIAGE_MODEL,
-        max_tokens=600,
-        system=SYSTEM_PROMPT,
-        messages=[{"role": "user", "content": _build_user_prompt(alert, logs)}],
+        contents=_build_user_prompt(alert, logs),
+        config=types.GenerateContentConfig(
+            system_instruction=SYSTEM_PROMPT,
+            max_output_tokens=600,
+            temperature=0.2,
+        ),
     )
-    raw_text = "".join(block.text for block in response.content if block.type == "text")
+    raw_text = response.text or ""
 
     try:
         parsed = _extract_json(raw_text)
